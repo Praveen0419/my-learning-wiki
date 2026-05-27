@@ -1,0 +1,61 @@
+# BSP Learnings
+
+A BSP is the software layer that allows an OS to run on specific hardware.
+
+Without BSP:
+
+Linux/QNX cannot talk to hardware
+CPU cannot initialize peripherals
+Drivers cannot access registers
+Kernel cannot boot correctly
+
+
+A BSP usually contains:
+
+Component	Purpose
+Bootloader	Initializes hardware and loads OS
+Device Tree	Describes hardware to kernel
+Kernel Config	Enables required drivers
+Drivers	UART, SPI, I2C, CAN, Ethernet
+Pinmux Config	Configures pin functionality
+Clock Setup	Enables clocks
+Memory Init	DDR initialization
+Build System	Yocto/Buildroot
+Flashing Scripts	Programs image to board
+Debug Tools	UART/JTAG support
+
+
+
+Power ON
+   ↓
+Reset Released
+   ↓
+Boot ROM Executes
+   ↓
+Internal Flash Selected
+   ↓
+Vector Table Read
+   ↓
+Reset_Handler()
+   ↓
+Stack Initialization
+   ↓
+.data Copy
+   ↓
+.bss Zero Init
+   ↓
+SystemInit()
+   ↓
+Clock Setup
+   ↓
+MPU/Cache Init
+   ↓
+RTOS Init (optional)
+   ↓
+Peripheral Drivers Init
+   ↓
+main()
+   ↓
+Scheduler Starts
+   ↓
+Application Tasks Run
